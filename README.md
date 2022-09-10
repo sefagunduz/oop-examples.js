@@ -6,3 +6,9 @@ Module based, object oriented javascript examples
 ```html
 <script src="./index.js" type="module"></script>
 ```
+
+```html
+<script type="module">
+    import cars from "./cars.js";
+</script>
+```

@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>oop examples js</title>
-    <script src="./index.js" type="module"></script>
+    <script src="./indexCreator.js" type="module"></script>
 </head>
+
 <body>
-    
+
+    <script type="module">
+        import cars from "./cars.js";
+
+        const myCars = new cars();
+
+        const volvo = { brand: "volvo", model: "xc 90", year: "2020" };
+        myCars.insert(volvo);
+
+        myCars.delete(3);
+        
+        const mercedes = { brand: "mercedes", model: "c 180", year: "2022" };
+        myCars.update(17,mercedes);
+
+        const resultS = await myCars.getSingle(4);
+        console.log(resultS);
+
+        const resultSs = await myCars.getList();
+        console.log(resultSs);
+
+        import staticData from "./staticData.js";
+        staticData.getStatic();
+    </script>
 </body>
+
 </html>
