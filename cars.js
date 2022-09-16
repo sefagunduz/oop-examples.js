@@ -7,23 +7,59 @@ export default class cars extends database {
     }
     insert = (car) => {
         // insert new car
-        this.insertDB(car);
+        if(typeof car === "object"){
+            if(car.brand !== undefined && car.model !== undefined && car.year !== undefined){
+                this.insertDB(car);
+            }
+            else{
+                console.error("Car object error");
+            }
+        }
+        else{
+            console.error("Car object is not object");
+        }
     }
 
     delete = (key) => {
         // delete exiting car
-        this.deleteDB(key);
+        if(parseInt(key) > 0){
+            this.deleteDB(key);
+        }
+        else{
+            console.error("Car key error");
+        }
     }
 
-    update = (key,car) => {
+    update = async (key,car) => {
         // update exiting car
-        this.updateDB(key,car);
+        if(parseInt(key) > 0){
+            if(typeof car === "object"){
+                if(car.brand !== undefined && car.model !== undefined && car.year !== undefined){
+                    const data = await this.updateDB(key,car);
+                    return data;
+                }
+                else{
+                    console.error("Car object error");
+                }
+            }
+            else{
+                console.error("Car object is not object");
+            }
+        }
+        else{
+            console.error("Car key error");
+        }
     }
 
     getSingle = async (key) => {
         // get single car
-        const data = await this.getSingleDB(key);
-        return data;
+        if(parseInt(key) > 0){
+            const data = await this.getSingleDB(key);
+            return data;
+        }
+        else{
+            console.error("Car key error");
+        }
     }
 
     getList = async () => {

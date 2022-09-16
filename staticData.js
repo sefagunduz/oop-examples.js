@@ -1,6 +1,6 @@
 class staticData{
     static getStatic(){
-        console.log("static data");
+        console.info("%cDatabase Name : Car - Version : 1", 'background: #222; color: #bada55');
     }
 }
 

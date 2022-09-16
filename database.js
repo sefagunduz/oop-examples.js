@@ -52,27 +52,37 @@ class database {
         }
     }
 
-    updateDB = (key,car) => {
-        // update exiting car
-        const request = indexedDB.open("cars", 1);
-        request.onsuccess = (event) => {
-            var db = event.target.result;
-            const objectStore = db.transaction(["car"], "readwrite").objectStore("car");
-            const requestO = objectStore.get(key);
-
-            requestO.onsuccess = (event) => {
-                const data = event.target.result;
-                data.brand = car.brand;
-                data.model = car.model;
-                data.year = car.year;
+    updateDB = async (key,car) => {
+        // get single car
+        var returnData = new Promise(function(resolve, reject) {
+            const request = indexedDB.open("cars", 1);
+            request.onsuccess = (event) => {
+                var db = event.target.result;
+                const objectStore = db.transaction(["car"], "readwrite").objectStore("car");
                 
-                const requestUpdate = objectStore.put(data,key);
+                const requestO = objectStore.get(key);
 
-                requestUpdate.onsuccess = (event) => {
-                    console.log("update successful");
-                };
-            };
-        }
+                var returnData2 = new Promise(function(resolve, reject) {
+                    requestO.onsuccess = (event) =>{
+                        const data = event.target.result;
+
+                        const requestUpdate = objectStore.put(car,parseInt(key));
+                    
+                        requestUpdate.onsuccess = (event3) => {
+                            console.log("update successful");
+                        };
+
+                        resolve(data);
+                    }
+                })
+                returnData2.then(function(data){
+                    resolve(data);
+                });
+                
+            }
+        });
+        return returnData.then(data => data);
+
     }
 
     getSingleDB = async (key) => {
